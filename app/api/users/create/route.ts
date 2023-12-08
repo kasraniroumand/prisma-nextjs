@@ -5,9 +5,9 @@ export async function GET(request: NextRequest,
                           response: NextResponse){
     // find unique always return a single object
     // just find based on unique attributes like id
-    const newUser = await client.user.findUnique({
+    const newUser = await client.user.findFirst({
         where: {
-            id: 1
+            name: "test2"
         }
     })
 
