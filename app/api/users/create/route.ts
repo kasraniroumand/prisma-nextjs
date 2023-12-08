@@ -5,9 +5,14 @@ export async function GET(request: NextRequest,
                           response: NextResponse){
 
     const newUser = await client.user.findMany({
-        distinct: ['name'],
+        where:{
+            name: "test1"
+        },
         take: 2,
-        skip: 1
+        skip: 1,
+        orderBy: {
+            name: "asc"
+        }
     })
 
     return NextResponse.json({newUser})
