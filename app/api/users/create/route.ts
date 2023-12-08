@@ -3,15 +3,12 @@ import client from "@/prisma/client";
 
 export async function GET(request: NextRequest,
                           response: NextResponse){
-    // find unique always return a single object
-    // just find based on unique attributes like id
+
     const newUser = await client.user.findMany({
-        // where: {
-        //     name: 'test1'
-        // },
-        distinct: ['name']
+        distinct: ['name'],
+        take: 2,
+        skip: 1
     })
 
-    //console.log(newUser)
     return NextResponse.json({newUser})
 }
