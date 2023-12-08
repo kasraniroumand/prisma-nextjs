@@ -7,7 +7,12 @@ export async function GET(request: NextRequest,
     // just find based on unique attributes like id
     const newUser = await client.user.findFirst({
         where: {
-            name: "test2"
+            userPreference:{
+                id: 1
+            }
+        },
+        select:{
+            name: true,
         }
     })
 
