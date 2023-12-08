@@ -5,17 +5,13 @@ export async function GET(request: NextRequest,
                           response: NextResponse){
     // find unique always return a single object
     // just find based on unique attributes like id
-    const newUser = await client.user.findFirst({
-        where: {
-            userPreference:{
-                id: 1
-            }
-        },
-        select:{
-            name: true,
-        }
+    const newUser = await client.user.findMany({
+        // where: {
+        //     name: 'test1'
+        // },
+        distinct: ['name']
     })
 
-    console.log(newUser)
+    //console.log(newUser)
     return NextResponse.json({newUser})
 }
