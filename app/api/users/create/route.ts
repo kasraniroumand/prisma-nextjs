@@ -28,29 +28,9 @@ export async function GET(request: NextRequest,
                           response: NextResponse){
 
     const newUser = await client.user.findMany({
-        where:{
-            name: {
-                equals: "test1",
-                not: "test324243"
-            },
-            age: {
-                in: [20, 44],
-                notIn: [88,41],
-                lt: 100,
-                lte: 120,
-                gt: 10,
-                gte: 11
-            },
-            email: {
-                contains: "@test.com",
-                endsWith: "@example.com",
-                startsWith: "@kontoso.com"
-            }
-        },
-        take: 2,
-        skip: 1,
-        orderBy: {
-            name: "asc"
+        where: {
+            AND: [{email: {contains: "test1"}}, {name: {equals: "test1"}}],
+            OR: [{email: {contains: "test1"}}, {name: {equals: "test1"}}]
         }
     })
 
