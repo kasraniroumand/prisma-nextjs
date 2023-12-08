@@ -1,0 +1,56 @@
+import NextAuth, {AuthOptions} from "next-auth";
+import {OAuthConfig} from "next-auth/providers/oauth"
+
+export const authOptions = {
+    // Configure one or more authentication providers
+    providers: [
+        {
+            id: "spring-boot",
+            name: "spring-boot",
+            type: "oauth",
+            scope: "openid profile",
+            params: {grant_type: "authorization_code"},
+            redirect_uri: "http://localhost:3000",
+            callbackUrl: "http://localhost:3000",
+            wellKnown: "http://localhost:9000/.well-known/openid-configuration",
+            accessTokenUrl: "http://localhost:9000/oauth2/token",  // Replace with your token endpoint
+            authorizationUrl: "http://localhost:9000/oauth2/authorize",  // Replace with your authorization endpoint
+            clientId: "client",  // Set client ID
+            clientSecret: "secret",  // Set client secret,
+            // profile: (profile: { id: any; name: any; email: any; }) => {
+            //     return {
+            //         id: profile.id,
+            //         name: profile.name,
+            //         email: profile.email
+            //     };
+            // },
+        }
+    ],
+    session: {
+        // Your session options here
+    },
+    jwt: {
+        // Your JWT options here
+    },
+    callbacks: {
+        async signIn(user, account, profile) {
+            // Custom sign-in logic
+            return true
+        },
+        async session(session, user) {
+            // Custom session handling
+            return session
+        },
+        async jwt(token, user, account, profile, isNewUser) {
+            // Custom JWT handling
+            return token
+        },
+    },
+}
+
+
+const handler = NextAuth(authOptions as AuthOptions)
+
+export {handler as GET, handler as POST};
+
+

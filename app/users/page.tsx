@@ -1,10 +1,6 @@
 import React from 'react';
-import Link from "next/link";
-import client from "@/prisma/client";
 
-const Page = async () => {
-
-    
+const Page = () => {
     return (
         <div>
             list
