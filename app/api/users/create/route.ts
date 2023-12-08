@@ -29,8 +29,31 @@ export async function GET(request: NextRequest,
 
     const newUser = await client.user.findMany({
         where: {
-            AND: [{email: {contains: "test1"}}, {name: {equals: "test1"}}],
-            OR: [{email: {contains: "test1"}}, {name: {equals: "test1"}}]
+            writtenPosts:{
+                some: {
+                    title: {contains: 'Hello'}
+                }
+            }
+        }
+    })
+
+    const newUser2 = await client.user.findMany({
+        where: {
+            writtenPosts:{
+                every: {
+                    title: {contains: 'Hello'}
+                }
+            }
+        }
+    })
+
+    const newUser3 = await client.user.findMany({
+        where: {
+            writtenPosts:{
+                none: {
+                    title: {contains: 'Hello'}
+                }
+            }
         }
     })
 
