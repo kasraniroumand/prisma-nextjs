@@ -28,14 +28,10 @@ export async function GET(request: NextRequest,
                           response: NextResponse){
 
     const avg = await client.user.aggregate({
-        _avg:{
+        _count:{
             age: true
         },
-        where: {
-            age: {
-                lt: 20,
-            },
-        },
+
     })
     console.log(avg)
     return NextResponse.json({avg})
