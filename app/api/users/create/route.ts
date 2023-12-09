@@ -27,29 +27,16 @@ LIMIT ? OFFSET ?
 export async function GET(request: NextRequest,
                           response: NextResponse){
 
-    const newUser = await client.post.findMany({
+    const avg = await client.user.aggregate({
+        _avg:{
+            age: true
+        },
         where: {
-            AND: [
-                {
-                    author: {
-                        is: {
-                            age: 27
-                        }
-                    }
-                },
-                {
-                    author: {
-                        isNot: {
-                            age: 27
-                        }
-                    }
-                }
-            ]
-
-        }
+            age: {
+                lt: 20,
+            },
+        },
     })
-
-
-
-    return NextResponse.json({newUser})
+    console.log(avg)
+    return NextResponse.json({avg})
 }
