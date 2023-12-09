@@ -27,35 +27,29 @@ LIMIT ? OFFSET ?
 export async function GET(request: NextRequest,
                           response: NextResponse){
 
-    const newUser = await client.user.findMany({
+    const newUser = await client.post.findMany({
         where: {
-            writtenPosts:{
-                some: {
-                    title: {contains: 'Hello'}
+            AND: [
+                {
+                    author: {
+                        is: {
+                            age: 27
+                        }
+                    }
+                },
+                {
+                    author: {
+                        isNot: {
+                            age: 27
+                        }
+                    }
                 }
-            }
+            ]
+
         }
     })
 
-    const newUser2 = await client.user.findMany({
-        where: {
-            writtenPosts:{
-                every: {
-                    title: {contains: 'Hello'}
-                }
-            }
-        }
-    })
 
-    const newUser3 = await client.user.findMany({
-        where: {
-            writtenPosts:{
-                none: {
-                    title: {contains: 'Hello'}
-                }
-            }
-        }
-    })
 
     return NextResponse.json({newUser})
 }
